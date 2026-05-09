@@ -1,0 +1,5 @@
+pip freeze > req.txt
+
+django-admin startproject Todo_mag    
+python manage.py runserver
+python ./manage.py startapp todolist
