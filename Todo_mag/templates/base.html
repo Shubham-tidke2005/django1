@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>TodoManager</title>
+    <title>{% block Title %}{% endblock Title %}</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -235,10 +235,10 @@
         <div class="logo">TodoManager</div>
 
         <ul class="nav-links" id="navLinks">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Tasks</a></li>
-            <li><a href="#">Features</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="{% url 'homepage' %}">Home</a></li>
+            <li><a href="{% url 'aboutpage' %}">About</a></li>
+            <li><a href="{% url 'todolistpage' %}">todolist</a></li>
+            <li><a href="{% url 'contactpage' %}">Contact</a></li>
         </ul>
 
         <div class="menu-toggle" id="menuToggle">
@@ -252,7 +252,7 @@
 
         <div class="hero-content">
             <h1 class="title">
-                Welcome to <span>TodoManager</span>
+                Welcome to <span>{% block headline %}{% endblock headline %}</span>
             </h1>
 
             <p class="subtitle">

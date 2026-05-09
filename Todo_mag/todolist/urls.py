@@ -3,6 +3,10 @@ from django.urls import path,include
 from . import views
 
 urlpatterns = [
-    path('todolist/', views.todolist,name="todolist")
+    path('', views.home,name="homepage"),
+    path('about/', views.about,name="aboutpage"),
+    path('contact/', views.contact,name="contactpage"),
+    path('todolist/', views.todolist,name="todolistpage"),
+    path('home/', views.home,name="homepage")
     
 ]
