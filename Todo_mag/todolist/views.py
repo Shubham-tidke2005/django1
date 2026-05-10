@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
+from todolist.models import Task
 # Create your views here.
 
 # def todolist(request):
@@ -30,8 +31,10 @@ def contact(request):
     return render(request,"contact.html",cont)
 
 def todolist(request):
+    all_task=Task.objects.all()
     cont={
-        'page':'Todolist'
+        'page':'Todolist',
+        'tasks':all_task
     }
     return render(request,"todolist.html",cont)
 

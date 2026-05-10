@@ -268,23 +268,7 @@
 
     <section class="hero">
 
-        <div class="hero-content">
-            <h1 class="title">
-                Welcome to <span>{% block headline %}{% endblock headline %}</span>
-            </h1>
-
-            <p class="subtitle">
-                Organize your daily tasks efficiently and boost your productivity.
-            </p>
-
-            <button class="btn">Get Started</button>
-        </div>
-
-        <!-- Floating Background Shapes -->
-
-        <div class="floating-circle circle1"></div>
-        <div class="floating-circle circle2"></div>
-        <div class="floating-circle circle3"></div>
+        {% block content %}{% endblock content %}
 
     </section>
 
@@ -298,19 +282,7 @@
             navLinks.classList.toggle("active");
         });
 
-        // BUTTON ANIMATION
-
-        const button = document.querySelector(".btn");
-
-        button.addEventListener("click", () => {
-
-            button.innerText = "Let's Go 🚀";
-
-            setTimeout(() => {
-                button.innerText = "Get Started";
-            }, 2000);
-
-        });
+        
     </script>
 
 </body>

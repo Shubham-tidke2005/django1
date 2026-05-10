@@ -1,9 +1,142 @@
 {%  extends "base.html" %}
 
 
-{% block Title %}
-    todolist
-{% endblock Title %}
+{% block content %}
+
+<div class="table-container">
+
+    <table class="todo-table">
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Task</th>
+                <th>Status</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for task in tasks %}
+
+            <tr>
+                <td>{{ forloop.counter }}</td>
+
+                <td>{{ task.task }}</td>
+
+                <td>
+                    {% if task.is_completed %}
+                        <span class="completed">Completed</span>
+                    {% else %}
+                        <span class="pending">Pending</span>
+                    {% endif %}
+                </td>
+
+                <td>
+                    <a href="#" class="edit-btn">Edit</a>
+                </td>
+
+                <td>
+                    <a href="#" class="delete-btn">Delete</a>
+                </td>
+            </tr>
+
+            {% empty %}
+
+            <tr>
+                <td colspan="5">No Tasks Available</td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<style>
+.table-container{
+    width:90%;
+    margin:120px auto;
+    overflow-x:auto;
+}
+
+.todo-table{
+    width:100%;
+    border-collapse:collapse;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(10px);
+    border-radius:15px;
+    overflow:hidden;
+}
+
+.todo-table th,
+.todo-table td{
+    padding:18px;
+    text-align:center;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.todo-table th{
+    background:#38bdf8;
+    color:white;
+    font-size:1rem;
+}
+
+.todo-table tr:hover{
+    background:rgba(255,255,255,0.05);
+}
+
+.completed{
+    color:#22c55e;
+    font-weight:600;
+}
+
+.pending{
+    color:#f59e0b;
+    font-weight:600;
+}
+
+.edit-btn,
+.delete-btn{
+    padding:8px 16px;
+    border-radius:8px;
+    text-decoration:none;
+    color:white;
+    transition:0.3s;
+}
+
+.edit-btn{
+    background:#0ea5e9;
+}
+
+.delete-btn{
+    background:#ef4444;
+}
+
+.edit-btn:hover{
+    background:#0284c7;
+}
+
+.delete-btn:hover{
+    background:#dc2626;
+}
+
+@media(max-width:768px){
+
+    .todo-table th,
+    .todo-table td{
+        padding:12px;
+        font-size:0.9rem;
+    }
+
+}
+</style>
+
+{% endblock content %}
 
 
  {% block headline %}
