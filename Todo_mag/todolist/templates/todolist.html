@@ -5,11 +5,27 @@
 
 <div class="table-container">
 
+    <!-- MESSAGES -->
+
+    {% if messages %}
+    <div class="message-container">
+
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+    </div>
+    {% endif %}
+
+    <!-- TABLE -->
+
     <table class="todo-table">
 
         <thead>
             <tr>
-                <th>ID</th>
+                <th>Total</th>
                 <th>Task</th>
                 <th>Status</th>
                 <th>Edit</th>
@@ -22,6 +38,7 @@
             {% for task in tasks %}
 
             <tr>
+
                 <td>{{ forloop.counter }}</td>
 
                 <td>{{ task.task }}</td>
@@ -39,8 +56,9 @@
                 </td>
 
                 <td>
-                    <a href="#" class="delete-btn">Delete</a>
+                    <a href="{% url 'delete_task' task.id %}" class="delete-btn">Delete</a>
                 </td>
+
             </tr>
 
             {% empty %}
@@ -55,22 +73,53 @@
 
     </table>
 
+    <!-- FORM -->
+
+<div class="form-container">
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <input 
+            type="text" 
+            name="task" 
+            placeholder="Enter your task..."
+            class="task-input"
+            required
+        >
+
+        <button type="submit" class="submit-btn">
+            Add Task
+        </button>
+
+    </form>
+
 </div>
 
+</div>
+
+
+
 <style>
+
 .table-container{
     width:90%;
-    margin:120px auto;
+    margin:120px auto 40px;
     overflow-x:auto;
 }
 
+/* TABLE */
+
 .todo-table{
     width:100%;
+    margin-top:20px;
     border-collapse:collapse;
     background:rgba(255,255,255,0.08);
     backdrop-filter:blur(10px);
     border-radius:15px;
     overflow:hidden;
+    box-shadow:0 0 20px rgba(0,0,0,0.2);
 }
 
 .todo-table th,
@@ -86,9 +135,15 @@
     font-size:1rem;
 }
 
+.todo-table tr{
+    transition:0.3s;
+}
+
 .todo-table tr:hover{
     background:rgba(255,255,255,0.05);
 }
+
+/* STATUS */
 
 .completed{
     color:#22c55e;
@@ -100,6 +155,8 @@
     font-weight:600;
 }
 
+/* BUTTONS */
+
 .edit-btn,
 .delete-btn{
     padding:8px 16px;
@@ -107,6 +164,7 @@
     text-decoration:none;
     color:white;
     transition:0.3s;
+    display:inline-block;
 }
 
 .edit-btn{
@@ -119,13 +177,210 @@
 
 .edit-btn:hover{
     background:#0284c7;
+    transform:translateY(-2px);
 }
 
 .delete-btn:hover{
     background:#dc2626;
+    transform:translateY(-2px);
 }
 
+/* FORM */
+
+.form-container{
+    width:90%;
+    margin:40px auto 20px;
+    display:flex;
+    justify-content:center;
+}
+
+.form-container form{
+    width:100%;
+    max-width:700px;
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    background:rgba(255,255,255,0.06);
+    padding:20px;
+    border-radius:20px;
+    backdrop-filter:blur(10px);
+    box-shadow:0 0 20px rgba(0,0,0,0.2);
+}
+
+.task-input{
+    flex:1;
+    padding:15px 20px;
+    border:none;
+    outline:none;
+    border-radius:12px;
+    background:rgba(255,255,255,0.08);
+    color:white;
+    font-size:1rem;
+    backdrop-filter:blur(10px);
+    transition:0.3s;
+}
+
+.task-input::placeholder{
+    color:rgba(255,255,255,0.7);
+}
+
+.task-input:focus{
+    border:1px solid #38bdf8;
+    box-shadow:0 0 10px rgba(56,189,248,0.5);
+}
+
+.submit-btn{
+    padding:15px 30px;
+    border:none;
+    border-radius:12px;
+    background:#38bdf8;
+    color:white;
+    font-size:1rem;
+    cursor:pointer;
+    transition:0.3s;
+    box-shadow:0 0 15px rgba(56,189,248,0.4);
+}
+
+.submit-btn:hover{
+    background:#0ea5e9;
+    transform:translateY(-3px);
+}
+
+/* MESSAGES */
+
+.message-container{
+    width:100%;
+    max-width:700px;
+    margin:20px auto;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.alert{
+    padding:15px 20px;
+    border-radius:12px;
+    font-size:1rem;
+    font-weight:500;
+    backdrop-filter:blur(10px);
+    animation:slideDown 0.5s ease;
+    box-shadow:0 0 15px rgba(0,0,0,0.2);
+    color:white;
+    transition:0.5s;
+}
+
+.success{
+    background:rgba(34,197,94,0.2);
+    border-left:5px solid #22c55e;
+}
+
+.error{
+    background:rgba(239,68,68,0.2);
+    border-left:5px solid #ef4444;
+}
+
+.warning{
+    background:rgba(245,158,11,0.2);
+    border-left:5px solid #f59e0b;
+}
+
+.info{
+    background:rgba(56,189,248,0.2);
+    border-left:5px solid #38bdf8;
+}
+/* POPUP MESSAGE CONTAINER */
+
+.message-container{
+    position:fixed;
+    top:90px;
+    right:20px;
+    z-index:9999;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+/* POPUP ALERT */
+
+.alert{
+    min-width:300px;
+    max-width:400px;
+    padding:16px 20px;
+    border-radius:14px;
+    font-size:1rem;
+    font-weight:500;
+    color:white;
+    backdrop-filter:blur(12px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.25);
+    animation:popupSlide 0.5s ease;
+    transition:0.5s;
+}
+
+/* SUCCESS */
+
+.success{
+    background:rgba(34,197,94,0.18);
+    border-left:5px solid #22c55e;
+}
+
+/* ERROR */
+
+.error{
+    background:rgba(239,68,68,0.18);
+    border-left:5px solid #ef4444;
+}
+
+/* WARNING */
+
+.warning{
+    background:rgba(245,158,11,0.18);
+    border-left:5px solid #f59e0b;
+}
+
+/* INFO */
+
+.info{
+    background:rgba(56,189,248,0.18);
+    border-left:5px solid #38bdf8;
+}
+
+/* ANIMATION */
+
+@keyframes popupSlide{
+    from{
+        opacity:0;
+        transform:translateX(100px);
+    }
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+/* ANIMATION */
+
+@keyframes slideDown{
+    from{
+        opacity:0;
+        transform:translateY(-20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* RESPONSIVE */
+
 @media(max-width:768px){
+
+    .form-container form{
+        flex-direction:column;
+    }
+
+    .submit-btn{
+        width:100%;
+    }
 
     .todo-table th,
     .todo-table td{
@@ -134,10 +389,36 @@
     }
 
 }
+
 </style>
 
-{% endblock content %}
+<script>
 
+    
+
+setTimeout(() => {
+
+    const alerts = document.querySelectorAll(".alert");
+
+    alerts.forEach((alert) => {
+
+        alert.style.opacity = "0";
+        alert.style.transform = "translateX(100px)";
+
+        setTimeout(() => {
+            alert.remove();
+        }, 500);
+
+    });
+
+}, 3000);
+
+
+
+
+</script>
+
+{% endblock content %}
 
  {% block headline %}
      {{page}}

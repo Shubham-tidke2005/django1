@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse
 from todolist.models import Task
+from todolist.forms import TaskForm
+from django.contrib import messages
 # Create your views here.
 
 # def todolist(request):
@@ -12,6 +14,31 @@ from todolist.models import Task
     
 #     return render(request,"main.html",{})
 
+
+
+def todolist(request):
+    if(request.method=="POST"):
+        from_data=TaskForm(request.POST or None)
+        if from_data.is_valid():
+            from_data.save()
+            messages.success(request, "Task added.")
+            return redirect("todolistpage")
+        messages.error(request, "Something went wrong")
+        
+    all_task=Task.objects.all()
+    cont={
+        'page':'Todolist',
+        'tasks':all_task
+    }
+    return render(request,"todolist.html",cont)
+
+
+def delete_task(request,idd):
+    curr_task=Task.objects.get(id=idd)
+    curr_task.delete()
+    messages.success(request,"Task deleted")
+    return redirect("todolistpage")
+    
 def home(request):
     cont={
         'page':'Home'
@@ -30,11 +57,4 @@ def contact(request):
     }
     return render(request,"contact.html",cont)
 
-def todolist(request):
-    all_task=Task.objects.all()
-    cont={
-        'page':'Todolist',
-        'tasks':all_task
-    }
-    return render(request,"todolist.html",cont)
 

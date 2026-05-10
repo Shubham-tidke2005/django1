@@ -7,3 +7,36 @@ python manage.py makemigrations
 python manage.py migrate
 python manage.py createsuperuser
 python manage.py shell
+
+
+orm
+ python manage.py shell
+
+-------------select---------------
+>>>from todolist.models import Task
+>>> task=Task(task="adding task through orm",is_completed=False)
+>>> task.save()
+>>> all_task=Task.objects.all()
+>>> all_task
+>>> task=Task.objects.get(id=1)
+>>> task
+>>> comp_task=Task.objects.filter(is_completed=True)
+>>> comp_task
+>>> not_comp_task=Task.objects.exclude(is_completed=True)
+>>> not_comp_task
+
+
+---------------update------------------
+>>> task=Task.objects.get(id=1)
+>>> task
+<Task: wake up erly>
+>>> task.is_completed=True
+>>> task.save()
+>>> not_comp_task.update(is_completed=True)
+>>> task=Task.objects.get(id=4)
+>>> task.delete()
+(1, {'todolist.Task': 1})
+
+
+
+
