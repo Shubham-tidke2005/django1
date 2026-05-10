@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -224,6 +225,20 @@
                 right:20px;
             }
         }
+
+        .logo-container{
+            display:flex;
+            align-items:center;
+            gap:10px;
+        }
+
+        .logo-img{
+            width:45px;
+            height:45px;
+            border-radius:50%;
+            object-fit:cover;
+            box-shadow:0 0 10px rgba(56,189,248,0.5);
+        }
     </style>
 </head>
 
@@ -232,7 +247,10 @@
     <!-- NAVBAR -->
 
     <nav class="navbar">
-        <div class="logo">TodoManager</div>
+        <div class="logo-container">
+            <img src="{% static "images/todo.jpg" %}" alt="Logo" class="logo-img">
+            <div class="logo">TodoManager</div>
+        </div>
 
         <ul class="nav-links" id="navLinks">
             <li><a href="{% url 'homepage' %}">Home</a></li>
