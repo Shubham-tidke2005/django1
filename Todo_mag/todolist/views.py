@@ -8,7 +8,7 @@ from django.contrib import messages
 # def todolist(request):
 #     # return HttpResponse("<h1>Hello Shubham</h1>")
 #     # dic={
-#     #     "shubham":"hiii"
+#     #     "shubham":"hii"
 #     # }
 #     # return JsonResponse(dic)
     
