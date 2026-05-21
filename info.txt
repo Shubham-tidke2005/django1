@@ -12,7 +12,7 @@ python manage.py shell
 orm
  python manage.py shell
 
--------------select---------------
+---------------select---------------
 >>>from todolist.models import Task
 >>> task=Task(task="adding task through orm",is_completed=False)
 >>> task.save()
