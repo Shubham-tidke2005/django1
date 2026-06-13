@@ -1,9 +1,161 @@
-{%  extends "base.html" %}
+{% extends "base.html" %}
 
 {% block Title %}
-    Contact
+Contact
 {% endblock Title %}
 
- {% block content %}
-     {{page}}
- {% endblock content %}
+{% block content %}
+
+<div class="contact-container">
+
+```
+<div class="contact-card">
+
+    <h1>Get In Touch</h1>
+
+    <p class="contact-desc">
+        Thank you for using TodoManager. Feel free to reach out for
+        suggestions, feedback, or collaboration opportunities.
+    </p>
+
+    <div class="contact-grid">
+
+        <div class="info-box">
+            <div class="icon">📧</div>
+            <h3>Email</h3>
+            <p>shubham@example.com</p>
+        </div>
+
+        <div class="info-box">
+            <div class="icon">📱</div>
+            <h3>Phone</h3>
+            <p>+91 7498----02</p>
+        </div>
+
+        <div class="info-box">
+            <div class="icon">📍</div>
+            <h3>Location</h3>
+            <p>Nashik, Maharashtra, India</p>
+        </div>
+
+        
+    </div>
+
+    <div class="bottom-text">
+        <p>
+            Stay organized, stay productive, and achieve your goals with TodoManager.
+        </p>
+    </div>
+
+</div>
+```
+
+</div>
+
+<style>
+
+.contact-container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    animation:fadeUp 1s ease;
+}
+
+.contact-card{
+    width:100%;
+    max-width:1000px;
+    padding:50px;
+    border-radius:25px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(15px);
+    box-shadow:0 0 30px rgba(0,0,0,0.25);
+    text-align:center;
+}
+
+.contact-card h1{
+    font-size:3rem;
+    color:#38bdf8;
+    margin-bottom:20px;
+    text-shadow:0 0 20px rgba(56,189,248,0.5);
+}
+
+.contact-desc{
+    max-width:700px;
+    margin:auto;
+    color:#cbd5e1;
+    line-height:1.8;
+    margin-bottom:40px;
+}
+
+.contact-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+}
+
+.info-box{
+    background:rgba(255,255,255,0.06);
+    padding:30px 20px;
+    border-radius:20px;
+    transition:.4s;
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.08);
+}
+
+.info-box:hover{
+    transform:translateY(-10px);
+    box-shadow:0 0 25px rgba(56,189,248,0.35);
+}
+
+.icon{
+    font-size:3rem;
+    margin-bottom:15px;
+}
+
+.info-box h3{
+    color:#38bdf8;
+    margin-bottom:10px;
+}
+
+.info-box p{
+    color:#e2e8f0;
+    word-break:break-word;
+}
+
+.bottom-text{
+    margin-top:40px;
+    color:#94a3b8;
+    font-size:1rem;
+}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@media(max-width:768px){
+
+    .contact-card{
+        padding:30px 20px;
+    }
+
+    .contact-card h1{
+        font-size:2.2rem;
+    }
+
+    .icon{
+        font-size:2.5rem;
+    }
+
+}
+
+</style>
+
+{% endblock content %}

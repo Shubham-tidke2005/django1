@@ -1,9 +1,251 @@
-{%  extends "base.html" %}
+{% extends "base.html" %}
+{% load static %}
 
 {% block Title %}
     About
 {% endblock Title %}
 
- {% block content %}
-     {{page}}
- {% endblock content %}
+{% block content %}
+
+<div class="about-container">
+
+    <!-- Floating Shapes -->
+    <div class="about-circle circle1"></div>
+    <div class="about-circle circle2"></div>
+
+    <div class="about-card">
+
+        <div class="about-image">
+            <img src="{% static 'images/todo.jpg' %}" alt="Todo Manager">
+        </div>
+
+        <div class="about-content">
+
+            <h1>About <span>TodoManager</span></h1>
+
+            <p>
+                TodoManager is a simple yet powerful task management
+                application designed to help users stay organized,
+                productive, and focused on their daily goals.
+            </p>
+
+            <p>
+                Whether you're a student, developer, freelancer,
+                or professional, TodoManager helps you track,
+                update, and manage tasks efficiently.
+            </p>
+
+            <div class="features">
+
+                <div class="feature-box">
+                    <h3>📋 Task Management</h3>
+                    <p>Create, update, and delete tasks easily.</p>
+                </div>
+
+                <div class="feature-box">
+                    <h3>✅ Status Tracking</h3>
+                    <p>Mark tasks as completed or pending.</p>
+                </div>
+
+                <div class="feature-box">
+                    <h3>⚡ Fast & Responsive</h3>
+                    <p>Works smoothly across all devices.</p>
+                </div>
+
+                <div class="feature-box">
+                    <h3>🎨 Modern UI</h3>
+                    <p>Beautiful glassmorphism design experience.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+.about-container{
+    width:100%;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+    padding:120px 20px 40px;
+}
+
+/* FLOATING CIRCLES */
+
+.about-circle{
+    position:absolute;
+    border-radius:50%;
+    background:rgba(56,189,248,0.12);
+    animation:float 6s ease-in-out infinite;
+}
+
+.circle1{
+    width:250px;
+    height:250px;
+    top:10%;
+    left:5%;
+}
+
+.circle2{
+    width:180px;
+    height:180px;
+    bottom:10%;
+    right:10%;
+    animation-delay:2s;
+}
+
+/* MAIN CARD */
+
+.about-card{
+    width:100%;
+    max-width:1200px;
+    display:flex;
+    gap:50px;
+    align-items:center;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(12px);
+    border-radius:30px;
+    padding:40px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.3);
+    animation:fadeUp 1s ease;
+    z-index:10;
+}
+
+/* IMAGE */
+
+.about-image{
+    flex:1;
+    display:flex;
+    justify-content:center;
+}
+
+.about-image img{
+    width:100%;
+    max-width:400px;
+    border-radius:25px;
+    box-shadow:0 0 25px rgba(56,189,248,0.4);
+    transition:0.5s;
+}
+
+.about-image img:hover{
+    transform:scale(1.05);
+}
+
+/* CONTENT */
+
+.about-content{
+    flex:1.3;
+    text-align:left;
+}
+
+.about-content h1{
+    font-size:3rem;
+    margin-bottom:20px;
+}
+
+.about-content h1 span{
+    color:#38bdf8;
+    text-shadow:0 0 15px rgba(56,189,248,0.7);
+}
+
+.about-content p{
+    font-size:1.05rem;
+    line-height:1.9;
+    color:#dbeafe;
+    margin-bottom:20px;
+}
+
+/* FEATURES */
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+    margin-top:25px;
+}
+
+.feature-box{
+    background:rgba(255,255,255,0.08);
+    padding:20px;
+    border-radius:18px;
+    transition:0.4s;
+    border:1px solid rgba(255,255,255,0.1);
+}
+
+.feature-box:hover{
+    transform:translateY(-8px);
+    box-shadow:0 0 20px rgba(56,189,248,0.25);
+}
+
+.feature-box h3{
+    color:#38bdf8;
+    margin-bottom:10px;
+}
+
+.feature-box p{
+    font-size:0.95rem;
+    margin:0;
+}
+
+/* ANIMATIONS */
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(50px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes float{
+    0%{
+        transform:translateY(0px);
+    }
+    50%{
+        transform:translateY(-25px);
+    }
+    100%{
+        transform:translateY(0px);
+    }
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+    .about-card{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .about-content{
+        text-align:center;
+    }
+
+    .about-content h1{
+        font-size:2.2rem;
+    }
+
+    .features{
+        grid-template-columns:1fr;
+    }
+
+    .about-image img{
+        max-width:300px;
+    }
+}
+
+</style>
+
+{% endblock content %}

@@ -3,6 +3,7 @@ from django.http import HttpResponse,JsonResponse
 from todolist.models import Task
 from todolist.forms import TaskForm
 from django.contrib import messages
+from django.core.paginator import Paginator
 # Create your views here.
 
 # def todolist(request):
@@ -25,13 +26,32 @@ def todolist(request):
             return redirect("todolistpage")
         messages.error(request, "Something went wrong")
         
-    all_task=Task.objects.all()
+    task_list = Task.objects.all().order_by("id")
+    paginator = Paginator(task_list, 5)   # 5 tasks per page
+    page_number = request.GET.get("page")
+    tasks = paginator.get_page(page_number)
     cont={
         'page':'Todolist',
-        'tasks':all_task
+        'tasks':tasks
     }
     return render(request,"todolist.html",cont)
 
+
+def edit_task(request,idd):
+    curr_task=Task.objects.get(id=idd)
+    if(request.method=="POST"):
+        from_data=TaskForm(request.POST or None,instance=curr_task)
+        if from_data.is_valid():
+            from_data.save()
+            messages.success(request, "Task edited")
+            return redirect("todolistpage")
+        messages.error(request, "Something went wrong")
+    else:
+        context={
+            'curr_task':curr_task
+        } 
+        return render(request,"edit_task.html",context)
+    
 
 def delete_task(request,idd):
     curr_task=Task.objects.get(id=idd)
@@ -39,11 +59,23 @@ def delete_task(request,idd):
     messages.success(request,"Task deleted")
     return redirect("todolistpage")
     
+def complete_task(request,idd):
+    curr_task=Task.objects.get(id=idd)
+    curr_task.is_completed=True
+    curr_task.save()
+    messages.success(request,"Mark as Completed")
+    return redirect("todolistpage")
+
+def pending_task(request,idd):
+    curr_task=Task.objects.get(id=idd)
+    curr_task.is_completed=False
+    curr_task.save()
+    messages.success(request,"Marked as Pending")
+    return redirect("todolistpage")
+    
+    
 def home(request):
-    cont={
-        'page':'Home'
-    }
-    return render(request,"home.html",cont)
+    return render(request,"home.html")
 
 def about(request):
     cont={

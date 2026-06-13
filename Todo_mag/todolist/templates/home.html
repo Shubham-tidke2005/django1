@@ -1,9 +1,196 @@
 {%  extends "base.html" %}
+{% load static%}
 
 {% block Title %}
-    home
+    Home
 {% endblock Title %}
 
- {% block content %}
-     {{page}}
- {% endblock content %}
+{% block content %}
+
+<div class="home-container">
+
+    <div class="home-image">
+        <img src="{% static 'images/home.jpg' %}" alt="home-image">
+    </div>
+
+    <div class="home-content">
+        <p class="main-heading">Quick and Easy Access Task</p>
+        <p class="sub-heading">Stay Organized, Stay Productive</p>
+        <p class="quote">Small steps every day lead to big results.</p>
+
+        <a href="{% url 'todolistpage' %}" class="start-btn">
+            Get Started 🚀
+        </a>
+    </div>
+
+</div>
+
+<style>
+
+/* MAIN CONTAINER */
+
+.home-container{
+    width:100%;
+    max-width:1200px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:70px;
+    padding:40px;
+    animation:fadeIn 1.5s ease;
+}
+
+/* IMAGE */
+
+.home-image{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    animation:slideLeft 1.5s ease;
+}
+
+.home-image img{
+    width:100%;
+    max-width:500px;
+    border-radius:25px;
+    box-shadow:0 0 40px rgba(56,189,248,0.4);
+    transition:0.5s;
+}
+
+.home-image img:hover{
+    transform:scale(1.05) rotate(-2deg);
+    box-shadow:0 0 60px rgba(56,189,248,0.8);
+}
+
+/* CONTENT */
+
+.home-content{
+    flex:1;
+    text-align:left;
+    animation:slideRight 1.5s ease;
+}
+
+.main-heading{
+    font-size:3rem;
+    font-weight:700;
+    line-height:1.2;
+    margin-bottom:20px;
+    color:white;
+}
+
+.sub-heading{
+    font-size:1.5rem;
+    color:#38bdf8;
+    font-weight:600;
+    margin-bottom:15px;
+}
+
+.quote{
+    font-size:1.1rem;
+    color:#d1d5db;
+    margin-bottom:30px;
+    line-height:1.8;
+}
+
+/* BUTTON */
+
+.start-btn{
+    display:inline-block;
+    padding:15px 35px;
+    text-decoration:none;
+    background:#38bdf8;
+    color:white;
+    border-radius:50px;
+    font-size:1rem;
+    font-weight:600;
+    box-shadow:0 0 25px rgba(56,189,248,0.5);
+    transition:0.4s;
+}
+
+.start-btn:hover{
+    transform:translateY(-5px) scale(1.05);
+    background:#0ea5e9;
+    box-shadow:0 0 40px rgba(56,189,248,0.8);
+}
+
+/* ANIMATIONS */
+
+@keyframes slideLeft{
+    from{
+        opacity:0;
+        transform:translateX(-100px);
+    }
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+@keyframes slideRight{
+    from{
+        opacity:0;
+        transform:translateX(100px);
+    }
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+    }
+    to{
+        opacity:1;
+    }
+}
+
+/* FLOATING EFFECT */
+
+.home-image img{
+    animation:floating 4s ease-in-out infinite;
+}
+
+@keyframes floating{
+    0%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-15px);
+    }
+    100%{
+        transform:translateY(0);
+    }
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+    .home-container{
+        flex-direction:column;
+        text-align:center;
+        gap:40px;
+    }
+
+    .home-content{
+        text-align:center;
+    }
+
+    .main-heading{
+        font-size:2.2rem;
+    }
+
+    .sub-heading{
+        font-size:1.2rem;
+    }
+
+    .home-image img{
+        max-width:350px;
+    }
+}
+
+</style>
+
+{% endblock content %}

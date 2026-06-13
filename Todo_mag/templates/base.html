@@ -1,289 +1,324 @@
 {% load static %}
+
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block Title %}{% endblock Title %}</title>
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+```
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:'Poppins', sans-serif;
+<style>
+
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:'Poppins',sans-serif;
+    }
+
+    body{
+        background:linear-gradient(135deg,#0f172a,#1e293b,#334155);
+        color:white;
+        overflow-x:hidden;
+        position:relative;
+    }
+
+    /* GLOWING BACKGROUND */
+
+    body::before{
+        content:"";
+        position:fixed;
+        top:-200px;
+        left:-200px;
+        width:500px;
+        height:500px;
+        border-radius:50%;
+        background:rgba(56,189,248,0.15);
+        filter:blur(120px);
+        z-index:-1;
+    }
+
+    body::after{
+        content:"";
+        position:fixed;
+        bottom:-200px;
+        right:-200px;
+        width:500px;
+        height:500px;
+        border-radius:50%;
+        background:rgba(14,165,233,0.12);
+        filter:blur(120px);
+        z-index:-1;
+    }
+
+    /* NAVBAR */
+
+    .navbar{
+        width:100%;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:20px 8%;
+        position:fixed;
+        top:0;
+        left:0;
+        z-index:1000;
+
+        background:rgba(255,255,255,0.08);
+        backdrop-filter:blur(15px);
+        border-bottom:1px solid rgba(255,255,255,0.08);
+    }
+
+    .logo-container{
+        display:flex;
+        align-items:center;
+        gap:10px;
+    }
+
+    .logo-img{
+        width:45px;
+        height:45px;
+        border-radius:50%;
+        object-fit:cover;
+        animation:logoGlow 3s infinite alternate;
+    }
+
+    .logo{
+        font-size:2rem;
+        font-weight:700;
+        color:#38bdf8;
+        animation:slideLeft 1s ease;
+    }
+
+    .nav-links{
+        display:flex;
+        gap:30px;
+        list-style:none;
+    }
+
+    .nav-links li a{
+        text-decoration:none;
+        color:white;
+        font-size:1rem;
+        position:relative;
+        transition:.3s;
+    }
+
+    .nav-links li a:hover{
+        color:#38bdf8;
+    }
+
+    .nav-links li a::after{
+        content:"";
+        position:absolute;
+        left:0;
+        bottom:-6px;
+        width:0%;
+        height:2px;
+        background:#38bdf8;
+        transition:.4s;
+    }
+
+    .nav-links li a:hover::after{
+        width:100%;
+    }
+
+    .menu-toggle{
+        display:none;
+        font-size:2rem;
+        cursor:pointer;
+    }
+
+    /* PAGE CONTAINER */
+
+    .hero{
+        width:100%;
+        min-height:100vh;
+        padding:120px 20px 50px;
+        position:relative;
+    }
+
+    /* FLOATING CIRCLES */
+
+    .floating-circle{
+        position:absolute;
+        border-radius:50%;
+        background:rgba(56,189,248,0.15);
+        animation:float 6s infinite ease-in-out;
+        z-index:-1;
+    }
+
+    .circle1{
+        width:250px;
+        height:250px;
+        top:10%;
+        left:5%;
+    }
+
+    .circle2{
+        width:180px;
+        height:180px;
+        bottom:10%;
+        right:10%;
+        animation-delay:2s;
+    }
+
+    .circle3{
+        width:120px;
+        height:120px;
+        top:60%;
+        left:50%;
+        animation-delay:4s;
+    }
+
+    /* ANIMATIONS */
+
+    @keyframes float{
+        0%{
+            transform:translateY(0);
+        }
+        50%{
+            transform:translateY(-25px);
+        }
+        100%{
+            transform:translateY(0);
+        }
+    }
+
+    @keyframes slideLeft{
+        from{
+            opacity:0;
+            transform:translateX(-50px);
+        }
+        to{
+            opacity:1;
+            transform:translateX(0);
+        }
+    }
+
+    @keyframes logoGlow{
+        from{
+            transform:scale(1);
+            box-shadow:0 0 10px rgba(56,189,248,0.4);
         }
 
-        body{
-            background: linear-gradient(135deg,#0f172a,#1e293b,#334155);
-            color:white;
-            overflow-x:hidden;
+        to{
+            transform:scale(1.08);
+            box-shadow:0 0 25px rgba(56,189,248,0.9);
         }
+    }
 
-        /* NAVBAR */
+    /* MOBILE */
 
-        .navbar{
-            width:100%;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            padding:20px 8%;
-            position:fixed;
-            top:0;
-            left:0;
-            z-index:1000;
-            backdrop-filter:blur(10px);
-            background:rgba(255,255,255,0.08);
-        }
+    @media(max-width:768px){
 
-        .logo{
-            font-size:2rem;
-            font-weight:700;
-            color:#38bdf8;
-            animation:slideLeft 1s ease;
+        .menu-toggle{
+            display:block;
         }
 
         .nav-links{
-            display:flex;
-            gap:30px;
-            list-style:none;
-        }
-
-        .nav-links li a{
-            text-decoration:none;
-            color:white;
-            font-size:1rem;
-            transition:0.3s;
-        }
-
-        .nav-links li a:hover{
-            color:#38bdf8;
-        }
-
-        /* MOBILE MENU */
-
-        .menu-toggle{
-            display:none;
-            font-size:2rem;
-            cursor:pointer;
-        }
-
-        /* HERO SECTION */
-
-        .hero{
-            width:100%;
-            min-height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            text-align:center;
-            padding:120px 20px 50px;
-            position:relative;
-        }
-
-        .hero-content{
-            z-index:10;
-            animation:fadeUp 1.5s ease;
-        }
-
-        .title{
-            font-size:4rem;
-            margin-bottom:20px;
-            line-height:1.2;
-        }
-
-        .title span{
-            color:#38bdf8;
-            text-shadow:0 0 20px rgba(56,189,248,0.8);
-        }
-
-        .subtitle{
-            font-size:1.2rem;
-            max-width:700px;
-            margin:auto;
-            opacity:0.9;
-            margin-bottom:30px;
-        }
-
-        .btn{
-            padding:14px 35px;
-            border:none;
-            border-radius:40px;
-            background:#38bdf8;
-            color:white;
-            font-size:1rem;
-            cursor:pointer;
-            transition:0.4s;
-            box-shadow:0 0 20px rgba(56,189,248,0.5);
-        }
-
-        .btn:hover{
-            transform:translateY(-5px) scale(1.05);
-            background:#0ea5e9;
-        }
-
-        /* FLOATING SHAPES */
-
-        .floating-circle{
             position:absolute;
-            border-radius:50%;
-            background:rgba(56,189,248,0.15);
-            animation:float 6s infinite ease-in-out;
+            top:80px;
+            right:-100%;
+            width:220px;
+            flex-direction:column;
+            background:rgba(15,23,42,0.95);
+            backdrop-filter:blur(15px);
+            padding:20px;
+            border-radius:15px;
+            transition:.4s;
         }
 
-        .circle1{
-            width:250px;
-            height:250px;
-            top:10%;
-            left:5%;
+        .nav-links.active{
+            right:20px;
         }
 
-        .circle2{
-            width:180px;
-            height:180px;
-            bottom:10%;
-            right:10%;
-            animation-delay:2s;
+        .logo{
+            font-size:1.5rem;
         }
+    }
 
-        .circle3{
-            width:120px;
-            height:120px;
-            top:60%;
-            left:50%;
-            animation-delay:4s;
-        }
+</style>
+```
 
-        /* ANIMATIONS */
-
-        @keyframes float{
-            0%{
-                transform:translateY(0px);
-            }
-            50%{
-                transform:translateY(-25px);
-            }
-            100%{
-                transform:translateY(0px);
-            }
-        }
-
-        @keyframes fadeUp{
-            from{
-                opacity:0;
-                transform:translateY(50px);
-            }
-            to{
-                opacity:1;
-                transform:translateY(0);
-            }
-        }
-
-        @keyframes slideLeft{
-            from{
-                opacity:0;
-                transform:translateX(-50px);
-            }
-            to{
-                opacity:1;
-                transform:translateX(0);
-            }
-        }
-
-        /* RESPONSIVE DESIGN */
-
-        @media(max-width:768px){
-
-            .title{
-                font-size:2.5rem;
-            }
-
-            .subtitle{
-                font-size:1rem;
-            }
-
-            .menu-toggle{
-                display:block;
-            }
-
-            .nav-links{
-                position:absolute;
-                top:80px;
-                right:-100%;
-                width:220px;
-                flex-direction:column;
-                background:rgba(15,23,42,0.95);
-                padding:20px;
-                border-radius:10px;
-                transition:0.4s;
-            }
-
-            .nav-links.active{
-                right:20px;
-            }
-        }
-
-        .logo-container{
-            display:flex;
-            align-items:center;
-            gap:10px;
-        }
-
-        .logo-img{
-            width:45px;
-            height:45px;
-            border-radius:50%;
-            object-fit:cover;
-            box-shadow:0 0 10px rgba(56,189,248,0.5);
-        }
-    </style>
 </head>
 
 <body>
 
-    <!-- NAVBAR -->
+```
+<!-- NAVBAR -->
 
-    <nav class="navbar">
-        <div class="logo-container">
-            <img src="{% static "images/todo.jpg" %}" alt="Logo" class="logo-img">
-            <div class="logo">TodoManager</div>
+<nav class="navbar">
+
+    <div class="logo-container">
+
+        <img src="{% static 'images/todo.jpg' %}" alt="Logo" class="logo-img">
+
+        <div class="logo">
+            TodoManager
         </div>
 
-        <ul class="nav-links" id="navLinks">
-            <li><a href="{% url 'homepage' %}">Home</a></li>
-            <li><a href="{% url 'aboutpage' %}">About</a></li>
-            <li><a href="{% url 'todolistpage' %}">todolist</a></li>
-            <li><a href="{% url 'contactpage' %}">Contact</a></li>
-        </ul>
+    </div>
 
-        <div class="menu-toggle" id="menuToggle">
-            ☰
-        </div>
-    </nav>
+    <ul class="nav-links" id="navLinks">
 
-    <!-- HERO SECTION -->
+        <li>
+            <a href="{% url 'homepage' %}">Home</a>
+        </li>
 
-    <section class="hero">
+        <li>
+            <a href="{% url 'aboutpage' %}">About</a>
+        </li>
 
-        {% block content %}{% endblock content %}
+        <li>
+            <a href="{% url 'todolistpage' %}">Todolist</a>
+        </li>
 
-    </section>
+        <li>
+            <a href="{% url 'contactpage' %}">Contact</a>
+        </li>
 
-    <script>
-        // MOBILE MENU
+    </ul>
 
-        const menuToggle = document.getElementById("menuToggle");
-        const navLinks = document.getElementById("navLinks");
+    <div class="menu-toggle" id="menuToggle">
+        ☰
+    </div>
 
-        menuToggle.addEventListener("click", () => {
-            navLinks.classList.toggle("active");
-        });
+</nav>
 
-        
-    </script>
+<!-- PAGE CONTENT -->
+
+<section class="hero">
+
+    <!-- FLOATING SHAPES -->
+
+    <div class="floating-circle circle1"></div>
+    <div class="floating-circle circle2"></div>
+    <div class="floating-circle circle3"></div>
+
+    {% block content %}
+    {% endblock content %}
+
+</section>
+
+<script>
+
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    menuToggle.addEventListener("click",()=>{
+
+        navLinks.classList.toggle("active");
+
+    });
+
+</script>
+```
 
 </body>
 </html>
