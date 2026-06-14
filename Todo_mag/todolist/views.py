@@ -4,6 +4,8 @@ from todolist.models import Task
 from todolist.forms import TaskForm
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 # def todolist(request):
@@ -16,17 +18,19 @@ from django.core.paginator import Paginator
 #     return render(request,"main.html",{})
 
 
-
+@login_required
 def todolist(request):
     if(request.method=="POST"):
         from_data=TaskForm(request.POST or None)
         if from_data.is_valid():
-            from_data.save()
+            instance=from_data.save(commit=False)
+            instance.owner=request.user
+            instance.save()
             messages.success(request, "Task added.")
             return redirect("todolist")
         messages.error(request, "Something went wrong")
         
-    task_list = Task.objects.all().order_by("id")
+    task_list = Task.objects.filter(owner=request.user).order_by("id")
     paginator = Paginator(task_list, 5)   # 5 tasks per page
     page_number = request.GET.get("page")
     tasks = paginator.get_page(page_number)
@@ -36,7 +40,7 @@ def todolist(request):
     }
     return render(request,"todolist.html",cont)
 
-
+@login_required
 def edit_task(request,idd):
     curr_task=Task.objects.get(id=idd)
     if(request.method=="POST"):
@@ -52,25 +56,37 @@ def edit_task(request,idd):
         } 
         return render(request,"edit_task.html",context)
     
-
+@login_required
 def delete_task(request,idd):
     curr_task=Task.objects.get(id=idd)
-    curr_task.delete()
-    messages.success(request,"Task deleted")
-    return redirect("todolist")
-    
-def complete_task(request,idd):
-    curr_task=Task.objects.get(id=idd)
-    curr_task.is_completed=True
-    curr_task.save()
-    messages.success(request,"Mark as Completed")
+    if(curr_task.owner == request.user):
+        curr_task.delete()
+        messages.success(request,"Task deleted")
+    else: 
+        messages.error(request,"can not delete others task")
     return redirect("todolist")
 
+@login_required  
+def complete_task(request,idd):
+    curr_task=Task.objects.get(id=idd)
+    if(curr_task.owner == request.user):
+        curr_task.is_completed=True
+        curr_task.save()
+        messages.success(request,"Mark as Completed")
+    else: 
+        messages.error(request,"can not compete others task")
+    return redirect("todolist")
+
+@login_required
 def pending_task(request,idd):
     curr_task=Task.objects.get(id=idd)
-    curr_task.is_completed=False
-    curr_task.save()
-    messages.success(request,"Marked as Pending")
+    if(curr_task.owner == request.user):
+        curr_task.is_completed=False
+        curr_task.save()
+        messages.success(request,"Marked as Pending")
+    else: 
+        messages.error(request,"can not pending others task")
+  
     return redirect("todolist")
     
     

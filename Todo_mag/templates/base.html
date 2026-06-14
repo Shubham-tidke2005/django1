@@ -58,82 +58,203 @@
 
     /* NAVBAR */
 
-    .navbar{
-        width:100%;
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        padding:20px 8%;
-        position:fixed;
-        top:0;
-        left:0;
-        z-index:1000;
+.navbar{
+    width:100%;
+    height:80px;
+    padding:0 6%;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:1000;
 
-        background:rgba(255,255,255,0.08);
-        backdrop-filter:blur(15px);
-        border-bottom:1px solid rgba(255,255,255,0.08);
-    }
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
-    .logo-container{
-        display:flex;
-        align-items:center;
-        gap:10px;
-    }
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
 
-    .logo-img{
-        width:45px;
-        height:45px;
-        border-radius:50%;
-        object-fit:cover;
-        animation:logoGlow 3s infinite alternate;
-    }
+/* LOGO */
 
-    .logo{
-        font-size:2rem;
-        font-weight:700;
-        color:#38bdf8;
-        animation:slideLeft 1s ease;
+.logo-container{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo-img{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    object-fit:cover;
+    animation:logoGlow 3s infinite alternate;
+}
+
+.logo{
+    font-size:1.8rem;
+    font-weight:700;
+    color:#38bdf8;
+}
+
+/* LINKS */
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:25px;
+    list-style:none;
+}
+
+.nav-links li{
+    list-style:none;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:white;
+    font-weight:500;
+    transition:.3s;
+    position:relative;
+}
+
+.nav-links a:hover{
+    color:#38bdf8;
+}
+
+.nav-links a::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-6px;
+    width:0;
+    height:2px;
+    background:#38bdf8;
+    transition:.3s;
+}
+
+.nav-links a:hover::after{
+    width:100%;
+}
+
+/* USERNAME */
+
+.user-badge{
+    background:rgba(56,189,248,.15);
+    color:#38bdf8;
+    padding:10px 16px;
+    border-radius:30px;
+    font-weight:600;
+    border:1px solid rgba(56,189,248,.3);
+}
+
+/* AUTH BUTTONS */
+
+.auth-btn{
+    padding:10px 20px;
+    border-radius:30px;
+    text-decoration:none;
+}
+
+.login-btn{
+    border:1px solid #38bdf8;
+}
+
+.login-btn:hover{
+    background:#38bdf8;
+    color:white !important;
+}
+
+.register-btn{
+    background:#38bdf8;
+    color:white !important;
+}
+
+.register-btn:hover{
+    background:#0ea5e9;
+}
+
+/* LOGOUT BUTTON */
+
+.logout-btn{
+    border:none;
+    outline:none;
+    cursor:pointer;
+    padding:10px 20px;
+    border-radius:30px;
+    background:#ef4444;
+    color:white;
+    font-weight:600;
+    transition:.3s;
+}
+
+.logout-btn:hover{
+    background:#dc2626;
+    transform:translateY(-2px);
+}
+
+/* HAMBURGER */
+
+.menu-toggle{
+    display:none;
+    font-size:2rem;
+    cursor:pointer;
+    color:white;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .menu-toggle{
+        display:block;
     }
 
     .nav-links{
-        display:flex;
-        gap:30px;
-        list-style:none;
-    }
-
-    .nav-links li a{
-        text-decoration:none;
-        color:white;
-        font-size:1rem;
-        position:relative;
-        transition:.3s;
-    }
-
-    .nav-links li a:hover{
-        color:#38bdf8;
-    }
-
-    .nav-links li a::after{
-        content:"";
         position:absolute;
-        left:0;
-        bottom:-6px;
-        width:0%;
-        height:2px;
-        background:#38bdf8;
+        top:80px;
+        right:-100%;
+        width:300px;
+
+        flex-direction:column;
+        align-items:flex-start;
+
+        background:rgba(15,23,42,.98);
+        backdrop-filter:blur(20px);
+
+        padding:30px;
+        gap:20px;
+
+        border-radius:20px;
         transition:.4s;
+        box-shadow:0 15px 35px rgba(0,0,0,.4);
     }
 
-    .nav-links li a:hover::after{
+    .nav-links.active{
+        right:15px;
+    }
+
+    .nav-links li{
         width:100%;
     }
 
-    .menu-toggle{
-        display:none;
-        font-size:2rem;
-        cursor:pointer;
+    .auth-btn,
+    .logout-btn{
+        width:100%;
+        text-align:center;
+        display:block;
     }
 
+    .logo{
+        font-size:1.4rem;
+    }
+
+    .logo-img{
+        width:42px;
+        height:42px;
+    }
+    }
     /* PAGE CONTAINER */
 
     .hero{
@@ -256,13 +377,8 @@
 <nav class="navbar">
 
     <div class="logo-container">
-
         <img src="{% static 'images/todo.jpg' %}" alt="Logo" class="logo-img">
-
-        <div class="logo">
-            TodoManager
-        </div>
-
+        <div class="logo">TodoManager</div>
     </div>
 
     <ul class="nav-links" id="navLinks">
@@ -283,6 +399,37 @@
             <a href="{% url 'contactpage' %}">Contact</a>
         </li>
 
+        {% if user.is_authenticated %}
+
+            <li class="user-badge">
+                {{ user.username }}
+            </li>
+
+            <li>
+                <form method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-btn">
+                        Logout
+                    </button>
+                </form>
+            </li>
+
+        {% else %}
+
+            <li>
+                <a href="{% url 'login' %}" class="auth-btn login-btn">
+                    Login
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'register' %}" class="auth-btn register-btn">
+                    Register
+                </a>
+            </li>
+
+        {% endif %}
+
     </ul>
 
     <div class="menu-toggle" id="menuToggle">
@@ -290,7 +437,6 @@
     </div>
 
 </nav>
-
 <!-- PAGE CONTENT -->
 
 <section class="hero">
@@ -311,10 +457,14 @@
     const menuToggle = document.getElementById("menuToggle");
     const navLinks = document.getElementById("navLinks");
 
-    menuToggle.addEventListener("click",()=>{
-
+    menuToggle.addEventListener("click", () => {
         navLinks.classList.toggle("active");
 
+        if(navLinks.classList.contains("active")){
+            menuToggle.innerHTML = "✕";
+        }else{
+            menuToggle.innerHTML = "☰";
+        }
     });
 
 </script>

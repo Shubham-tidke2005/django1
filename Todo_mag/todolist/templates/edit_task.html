@@ -24,7 +24,7 @@
     <!-- FORM -->
 
 <div class="form-container">
-
+    {%if curr_task.owner == user%}
     <form method="POST">
 
         {% csrf_token %}
@@ -52,6 +52,9 @@
         </button>
 
     </form>
+    {%else%}
+        <p>restricted</p>
+    {%endif%}
 
 </div>
 
