@@ -23,7 +23,7 @@ def todolist(request):
         if from_data.is_valid():
             from_data.save()
             messages.success(request, "Task added.")
-            return redirect("todolistpage")
+            return redirect("todolist")
         messages.error(request, "Something went wrong")
         
     task_list = Task.objects.all().order_by("id")
@@ -44,7 +44,7 @@ def edit_task(request,idd):
         if from_data.is_valid():
             from_data.save()
             messages.success(request, "Task edited")
-            return redirect("todolistpage")
+            return redirect("todolist")
         messages.error(request, "Something went wrong")
     else:
         context={
@@ -57,21 +57,21 @@ def delete_task(request,idd):
     curr_task=Task.objects.get(id=idd)
     curr_task.delete()
     messages.success(request,"Task deleted")
-    return redirect("todolistpage")
+    return redirect("todolist")
     
 def complete_task(request,idd):
     curr_task=Task.objects.get(id=idd)
     curr_task.is_completed=True
     curr_task.save()
     messages.success(request,"Mark as Completed")
-    return redirect("todolistpage")
+    return redirect("todolist")
 
 def pending_task(request,idd):
     curr_task=Task.objects.get(id=idd)
     curr_task.is_completed=False
     curr_task.save()
     messages.success(request,"Marked as Pending")
-    return redirect("todolistpage")
+    return redirect("todolist")
     
     
 def home(request):
