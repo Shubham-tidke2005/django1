@@ -1,6 +1,6 @@
 # 📝 TodoManager
 
-A modern and responsive Todo Management Web Application built using **Django**, **MySQL**, and **Bootstrap/Crispy Forms**.
+A modern and responsive Todo Management Web Application built using **Django**, **MySQL**, and **Bootstrap/Crispy Forms**..
 
 The application allows users to create accounts, securely log in, manage daily tasks, mark tasks as completed, edit existing tasks, and delete tasks with an attractive glassmorphism user interface.
 
