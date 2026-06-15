@@ -11,7 +11,7 @@ python manage.py createsuperuser
 python manage.py shell
 
 
-orm
+orm-------------------------------
  python manage.py shell
 
 ---------------select----------------
