@@ -1,3 +1,5 @@
+important commands
+
 pip freeze > req.txt
 
 django-admin startproject Todo_mag    
